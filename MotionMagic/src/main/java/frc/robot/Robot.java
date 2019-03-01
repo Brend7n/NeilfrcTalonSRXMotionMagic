@@ -73,11 +73,6 @@ public class Robot extends TimedRobot {
 	TalonSRX _talon = new TalonSRX(1);
 	Joystick _joy = new Joystick(0);
 
-	/* create some followers */
-	BaseMotorController _follower1 = new TalonSRX(0);
-	BaseMotorController _follower2 = new VictorSPX(0);
-	BaseMotorController _follower3 = new VictorSPX(1);
-
 	/* Used to build string throughout loop */
 	StringBuilder _sb = new StringBuilder();
 
@@ -85,21 +80,12 @@ public class Robot extends TimedRobot {
 	int _smoothing = 0;
 
 	public void robotInit() {
-		/* setup some followers */
-		_follower1.configFactoryDefault();
-		_follower2.configFactoryDefault();
-		_follower3.configFactoryDefault();
-		_follower1.follow(_talon);
-		_follower2.follow(_talon);
-		_follower3.follow(_talon);
-
 		/* Factory default hardware to prevent unexpected behavior */
 		_talon.configFactoryDefault();
 
 		/* Configure Sensor Source for Pirmary PID */
-		_talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-											Constants.kPIDLoopIdx, 
-											Constants.kTimeoutMs);
+		_talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,Constants.kPIDLoopIdx, 
+						    Constants.kTimeoutMs);
 
 		/**
 		 * Configure Talon SRX Output and Sesnor direction accordingly
@@ -159,7 +145,7 @@ public class Robot extends TimedRobot {
 			/* Motion Magic */ 
 			
 			/*4096 ticks/rev * 10 Rotations in either direction */
-			double targetPos = leftYstick * 4096 * 10.0;
+			double targetPos = 4096 * 10.0;
 			_talon.set(ControlMode.MotionMagic, targetPos);
 
 			/* Append more signals to print when in speed mode */
